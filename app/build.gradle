@@ -1,0 +1,91 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion Release.compileSdkVersion
+    defaultConfig {
+        applicationId ApplicationId.id
+        minSdkVersion Release.minSdkVersion
+        targetSdkVersion Release.targetSdkVersion
+        versionCode Release.versionCode
+        versionName Release.versionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    androidExtensions {
+        experimental = true
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+}
+
+dependencies {
+    //support
+    implementation Dependencies.kotlin
+    implementation Support.appCompat
+    implementation Support.core
+    implementation Support.constraintLayout
+    implementation Support.materialComponent
+    implementation Support.legacySupport
+    implementation Support.lifeCycleExtensions
+
+    //navigation
+    api Arch.navigationFragment
+    api Arch.navigationKtx
+
+    //reactivex
+    implementation Reactivex.kotlin
+    implementation Reactivex.android
+
+    //Dagger2
+    implementation Dagger.dagger
+    kapt Dagger.daggerCompiler
+
+    //unittest
+    testImplementation TestLibs.junit
+    androidTestImplementation TestLibs.testRunner
+
+    //Mockito
+    testImplementation UnitTest.mockitoCore
+    testImplementation UnitTest.mockitoInline
+    testImplementation UnitTest.coreTesting
+    testImplementation UnitTest.mockitoKotlin
+    testImplementation UnitTest.daggerMock
+    testImplementation UnitTest.kotlinTest
+
+    //Logger
+    implementation Log.timber
+
+    //Reactivex
+    implementation Reactivex.rxBinding
+
+    //CircularImageView
+    implementation CircularImageView.circularImageView
+
+    //Image loading
+    implementation Image.glide
+    kapt Image.glideCompiler
+
+    //network
+    api Retrofit.retrofit
+    api Retrofit.gsonConverter
+    api Retrofit.adapterRxJava
+    api Retrofit.loggingInterceptor
+    api Json.gson
+}
